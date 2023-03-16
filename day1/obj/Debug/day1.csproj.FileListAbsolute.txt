@@ -1,0 +1,7 @@
+C:\sb\unity2\day1\bin\Debug\day1.exe.config
+C:\sb\unity2\day1\bin\Debug\day1.exe
+C:\sb\unity2\day1\bin\Debug\day1.pdb
+C:\sb\unity2\day1\obj\Debug\day1.csproj.AssemblyReference.cache
+C:\sb\unity2\day1\obj\Debug\day1.csproj.CoreCompileInputs.cache
+C:\sb\unity2\day1\obj\Debug\day1.exe
+C:\sb\unity2\day1\obj\Debug\day1.pdb
