@@ -10,7 +10,7 @@ namespace day1
 	{
 		static void Main(string[] args)
 		{
-			Classes.Day1.Class1.Start();
+			Classes.Day1.Class1.Start(args);
 			Console.ReadKey();
 		}
 	}

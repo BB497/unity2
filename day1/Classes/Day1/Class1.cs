@@ -407,6 +407,35 @@ namespace day1.Classes.Day1 {
 		 *  만약, 해당 클래스가 인터페이스에 존재하는 메소드 중 하나라도 구현하지 않았을 경우, 
 		 *  해당 클래스는 객체화시키는 것이 불가능하다.(컴파일 에러 발생)
 		 */
+
+		// 복사 인터페이스
+		private interface ICLoneable {
+			// 사본 객체 반환
+			object Clone();
+		}
+
+		// 데이터 클래스
+		private class CData : ICloneable {
+			public int Val { get; set; } = 0;
+			public string Str { get; set; } = string.Empty;
+
+			// 생성자
+			public CData(int a_nVal, string a_oStr) {
+				this.Val = a_nVal;
+				this.Str = a_oStr;
+			}
+			// 사본 객체 반환
+			public virtual object Clone() {
+				/*
+				 * 값 형식 데이터는 할당해주는 것으로 간단하게 사본을 만들어내는 것이 가능하지만, 
+				 * 참조 형식 데이터는 단순히 할당만 할 경우 동일한 대상을 가리키는 얕은 복사가 
+				 * 이루어지기 때문에, 참조 형식 데이터는 깊은 복사를 수행할 수 있게 Clone()과 같은
+				 * 메소드를 사용할 필요가 있다.
+				 */
+				return new CData(this.Val, (string)this.Str.Clone());
+			}
+		}
+
 #endif // #if E01_01
 
 		// 초기화
@@ -438,6 +467,29 @@ namespace day1.Classes.Day1 {
 				var oPaintApp = new CPaintApp();
 				oPaintApp.Run();
 #elif E01_04
+			var oData = new CData(10, "ABC");
+			var oCloneDataA = (CData)oData.Clone();
+			var oCloneDataB = oData;
+
+			/*
+			 * 사본 B는 원본을 단순히 얕은 복사했기 때문에 사본 B의 데이터를 변경할 경우 원본에도
+			 * 영향을 미치는 것을 확인할 수 있다.
+			 * 
+			 * 반면 사본 A는 깊은 복사를 수행했기 때문에 사본A의 데이터를 변경해도 원본에는 전혀 영향을
+			 * 미치지 않는것을 확인할 수 있다.
+			 */
+
+			oCloneDataA.Val = 20;
+			oCloneDataB.Val = 30;
+
+			Console.WriteLine(">> 원본 데이터");
+			Console.WriteLine("{0}, {1}", oData.Val, oData.Str);
+
+			Console.WriteLine(">> 사본 데이터A");
+			Console.WriteLine("{0}, {1}", oCloneDataA.Val, oCloneDataA.Str);
+
+			Console.WriteLine(">> 사본 데이터B");
+			Console.WriteLine("{0}, {1}", oCloneDataB.Val, oCloneDataB.Str);
 #endif
 		}
 	}
