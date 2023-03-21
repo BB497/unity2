@@ -1,6 +1,7 @@
 ﻿//#define E01_01
 //#define E01_02
-#define E01_03
+//#define E01_03
+#define E01_04
 
 using System;
 using System.Collections.Generic;
@@ -28,10 +29,8 @@ using System.Threading.Tasks;
  * 자동으로 생성하는 특징이 있다.
  */
 
-namespace day1.Classes.Day1
-{
-	class Class1
-	{
+namespace day1.Classes.Day1 {
+	class Class1 {
 #if E01_01
 	class CPlayer
 	{
@@ -206,14 +205,212 @@ namespace day1.Classes.Day1
 		 * 따라서, 자식 클래스의 객체를 부모 클래스의 시야로 바라봄에 따라 해당 객체를 부모 클래스의 객체로
 		 * 인지하는 것이 가능하다.
 		 * 
+		 * 
 		 * >> 가상 메서드란?
-		 * - 
+		 * - 해당 메소드가 호출 될 때 실행되는 메소드를 동적으로 바인딩 할 수 있는 메소드를 의미한다.
+		 *  즉, 가상 메소드를 다형성에 활용하면 특정 객체를 가리키는 참조형에 상관 없이 항상 동일한 결과를 만들어낼 수 있다.
+		 *  
+		 *  >> 순수 가상 메소드(추상 메소드)?
+		 *  - 순수 가상 메소드(추상 메소드)는 구현부가 존재하지 않는 메소드를 의미한다.
+		 *  즉, 메소드 선언부만 존재하기 때문에 해당 메소드를 특정 클래스가 하나라도 지니고 있을 경우 해당 클래스는 객체화시킬 수 없는
+		 *  추상 클래스가 된다.
+		 *  
+		 *  따라서, 추상 클래스를 객체화시키기 위해서는 해당 클래스를 상속한 자식 클래스에서 추상 메소드를 구현함으로써 간접적으로
+		 *  객체화시킬 수 있다.
+		 *  
+		 *  만약, 자식 클래스에서도 부모 클래스에 존재하는 추상 메소드를 구현하지 않았을 경우 해당 클래스 또한
+		 *  객체화 시킬 수 없는 특징이 있다.
 		 */
-#endif	// #if E01_01
+
+
+		// Class 이용하여 삼각형, 사각형 그리기
+
+
+		// 색상
+		private enum EColor {
+			NONE = -1,
+			RED,
+			GREEN,
+			BLUE,
+			MAX_VAL
+		}
+
+
+		// 도형
+		private abstract class CShape {
+			protected EColor Color { get; private set; } = EColor.NONE;
+
+			// 생성자
+			public CShape(EColor a_eColor) {
+				this.Color = a_eColor;
+			}
+
+			// 색상을 반환한다.
+			public string GetColor() {
+				var oColors = new List<string>() {
+					"빨간색",
+					"녹색",
+					"파란색"
+				};
+				return oColors[(int)this.Color];
+			}
+
+
+			// 그린다
+			public abstract void Draw();
+		}
+
+		// 상속: 삼각형
+		private class CTriangle : CShape {
+			// 생성자
+			public CTriangle(EColor a_eColor) : base(a_eColor) {
+				// do something
+			}
+
+			// 그린다
+			public override void Draw() {
+				// do something
+				Console.WriteLine("{0} 삼각형을 그렸습니다.", this.GetColor());
+			}
+
+			// 상속: 사각형
+			private class CRectangle : CShape {
+				// 생성자
+				public CRectangle(EColor a_eColor) : base(a_eColor) {
+					Console.WriteLine("{0} 사각형을 그렸습니다.", this.GetColor());
+					// do something
+				}
+
+				// 그린다
+				public override void Draw() {
+					Console.WriteLine("{0} 사각형을 그렸습니다.", this.GetColor());
+				}
+			}
+
+			// 캔버스
+			private class CCanvas {
+				private List<CShape> m_oShapeList = new List<CShape>();
+
+				// 도형 추가
+				public void AddShape(CShape a_oShape) {
+					m_oShapeList.Add(a_oShape);
+				}
+
+				// 모든 도형을 그린다.
+				public void DrawAllShape() {
+					for (int i = 0; i < m_oShapeList.Count; ++i) {
+						m_oShapeList[i].Draw();
+					}
+
+
+				}
+			}
+
+
+			// 그림판 app
+			private class CPaintApp {
+				// 메뉴
+				private enum EMenu {
+					NONE = -1,
+					ADD_TRIANGLE,
+					ADD_RECTANGLE,
+					DRAW_ALL_SHAPES,
+					EXIT,
+					MAX_VAL
+				};
+
+				private CCanvas m_oCanvas = new CCanvas();
+
+				// 구동시킨다.
+				public void Run() {
+					EMenu eMenu = EMenu.NONE;
+
+					do {
+						this.PrintMenus();
+						Console.Write("\n메뉴 선택: ");
+
+						eMenu = (EMenu)(int.Parse(Console.ReadLine()) - 1);
+
+						switch (eMenu) {
+							case EMenu.ADD_TRIANGLE:
+							case EMenu.ADD_RECTANGLE: {
+									var oShape = this.CreateShape(eMenu);
+									m_oCanvas.AddShape(oShape);
+									break;
+								}
+							case EMenu.DRAW_ALL_SHAPES: m_oCanvas.DrawAllShape(); break;
+						}
+
+						Console.WriteLine();
+					} while (eMenu != EMenu.EXIT);
+				}
+
+				// 메뉴를 출력한다.
+				private void PrintMenus() {
+					Console.WriteLine("=====메뉴=====");
+					Console.WriteLine("1. 삼각형 추가");
+					Console.WriteLine("2. 사각형 추가");
+					Console.WriteLine("3. 모든 도형 그리기");
+					Console.WriteLine("4. 종료");
+				}
+
+				/*
+				 * 팩토리 메소드란?
+				 *  - 특정 객체를 생성하는 역할을 담당하는 메소드를 의미한다.
+				 *   즉, 팩토리 메소드를 활용하면 객체가 생성되는 과정에서 발생하는 초기화 등의 구문을 특정 메서드에서
+				 *   작성함으로써, 중복을 줄이는 것이 가능하다.
+				 */
+
+
+				// 도형 생성
+				private CShape CreateShape(EMenu a_eMenu) {
+					var oRandom = new Random();
+					var eColor = (EColor)oRandom.Next((int)EColor.RED, (int)EColor.MAX_VAL);
+
+					switch (a_eMenu) {
+						case EMenu.ADD_TRIANGLE: return new CTriangle(eColor);
+						case EMenu.ADD_RECTANGLE: return new CRectangle(eColor);
+					}
+					return null;
+				}
+			}
+
+
+
+
+#elif E01_04
+		/*
+		 * 인터페이스란?
+		 * - 특정 사물 간에 상호작용을 일으킬 수 있는 요소 또는 수단
+		 *  프로그래밍에서 인터페이스라는 것은 특정 클래스가 지니고 있는 메소드를 의미한다.
+		 *  
+		 *  객체 지향 프로그래밍은 사물간 상호작용을 통해서 프로그램의 목적을 달성하는 설계
+		 *  방식이기 때문에, 특정 명령 구문을 단순히 프로그래밍 관점으로 해석하는 것이 아니라
+		 *  특정 대상(의인화) 사람의 관점에 가깝게 끌어올려서 사물과 사물간의 요청과 해당 요청에
+		 *  대한 결과를 처리하는 방향으로 프로그램을 작성할 필요가 있다.
+		 *  
+		 *  프로그래밍에서 인터페이스란 함수의 목록을 의미한다.
+		 *  
+		 *  C# 인터페이스 선언 방법
+		 *  - interface + 인터페이스 이름 + 인터페이스 멤버(메소드)
+		 *  Ex)
+		 *  interface IOutput{
+		 *		void OutputDatas();
+		 *  }
+		 *  
+		 *  인터페이스는 단순한 함수(메소드)의 목록이기 때문에 해당 메소드의 구현부를 추가하는
+		 *  것은 불가능하며, 선언만 추가할 수 있다.
+		 *  
+		 *  또한, 특정 클래스가 인터페이스를 따를 경우, 해당 클래스에서는 반드시 인터페이스에
+		 *  존재하는 모든 메소드를 구현해줘야 한다.
+		 *  
+		 *  만약, 해당 클래스가 인터페이스에 존재하는 메소드 중 하나라도 구현하지 않았을 경우, 
+		 *  해당 클래스는 객체화시키는 것이 불가능하다.(컴파일 에러 발생)
+		 */
+#endif // #if E01_01
 
 		// 초기화
-		public static void Start(string[] args)
-		{
+		public static void Start(string[] args) {
 #if E01_01
 			var oPlayer01 = new CPlayer();
 			oPlayer01.LV = 1;
@@ -238,9 +435,10 @@ namespace day1.Classes.Day1
 			Console.WriteLine("\n");
 			oDerived.ShowInfo();
 #elif E01_03
-
+				var oPaintApp = new CPaintApp();
+				oPaintApp.Run();
+#elif E01_04
 #endif
 		}
-
 	}
 }
