@@ -1,7 +1,7 @@
 ﻿//#define E01_01
 //#define E01_02
 //#define E01_03
-#define E01_04
+//#define E01_04
 
 using System;
 using System.Collections.Generic;
@@ -477,7 +477,7 @@ namespace day1.Classes.Day1 {
 			 * 
 			 * 반면 사본 A는 깊은 복사를 수행했기 때문에 사본A의 데이터를 변경해도 원본에는 전혀 영향을
 			 * 미치지 않는것을 확인할 수 있다.
-			 */
+			 */ 
 
 			oCloneDataA.Val = 20;
 			oCloneDataB.Val = 30;
