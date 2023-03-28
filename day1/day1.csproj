@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Classes\Day1%28Class%29\Class1.cs" />
     <Compile Include="Classes\Day2%28Generic%29\Class2.cs" />
+    <Compile Include="Classes\Day3%28델리게이트%29\Class3.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

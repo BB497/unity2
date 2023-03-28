@@ -5,3 +5,11 @@ C:\sb\unity2\day1\obj\Debug\day1.csproj.AssemblyReference.cache
 C:\sb\unity2\day1\obj\Debug\day1.csproj.CoreCompileInputs.cache
 C:\sb\unity2\day1\obj\Debug\day1.exe
 C:\sb\unity2\day1\obj\Debug\day1.pdb
+C:\unity2\day1\bin\Debug\day1.exe.config
+C:\unity2\day1\bin\Debug\day1.exe
+C:\unity2\day1\bin\Debug\day1.pdb
+C:\unity2\day1\obj\Debug\day1.csproj.AssemblyReference.cache
+C:\unity2\day1\obj\Debug\day1.csproj.SuggestedBindingRedirects.cache
+C:\unity2\day1\obj\Debug\day1.csproj.CoreCompileInputs.cache
+C:\unity2\day1\obj\Debug\day1.exe
+C:\unity2\day1\obj\Debug\day1.pdb

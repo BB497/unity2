@@ -11,7 +11,8 @@ namespace day1
 		static void Main(string[] args)
 		{
 			//Classes.Day1.Class1.Start(args);
-			Classes.Day2.Class2.Start(args);
+			//Classes.Day2.Class2.Start(args);
+			Classes.Day3.Class3.Start(args);
 			Console.ReadKey();
 		}
 	}
