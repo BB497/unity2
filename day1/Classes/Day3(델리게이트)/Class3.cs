@@ -1,6 +1,7 @@
 ﻿//#define E03_01
 //#define E03_02
-#define E03_03
+//#define E03_03
+#define E03_04
 
 using System;
 using System.Collections.Generic;
@@ -161,6 +162,7 @@ namespace day1.Classes.Day3 {
             return null;
         }
 #elif E03_03
+
         /*
          * 일반적인 메소드는 람다와 달리 다른 지역에 존재하는 지역변수에 접근하는 것이 불가능하다.
          * 따라서, 특정 메소드가 동작하기 위해 필요한 데이터가 있다면 해당 데이터를 일반적으로
@@ -189,6 +191,8 @@ namespace day1.Classes.Day3 {
                 Console.WriteLine("람다 메소드 호출: {0}", a_nVal);
             };
         }
+#elif E03_04
+
 #endif  // E03_01
 
         //  초기화
@@ -301,6 +305,8 @@ namespace day1.Classes.Day3 {
 
             oAction01();
             oAction02();
+#elif E03_04
+
 #endif  // E03_01
         }
     }
